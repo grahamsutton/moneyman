@@ -1,0 +1,19 @@
+{
+    "name": "root/moneyman",
+    "authors": [
+        {
+            "name": "Graham Sutton",
+            "email": "grahamsutton2@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MoneyMan\\": "src/",
+            "MoneyManTests\\": "tests/"
+        }
+    }
+}
