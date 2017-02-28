@@ -3,4 +3,4 @@ machine:
     version: 7.0.8
   pre:
     - curl -s https://packagecloud.io/install/repositories/circleci/trusty/script.deb.sh | sudo bash
-    - sudo apt-get install circleci-php-7.0.8
+    - sudo apt-get install circleci-php-7.0
