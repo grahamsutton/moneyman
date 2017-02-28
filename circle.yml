@@ -2,4 +2,5 @@ machine:
   php:
     version: 7.0.4
 test:
-  - vendor/bin/phpunit tests/
+  override:
+    - vendor/bin/phpunit tests/
