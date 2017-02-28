@@ -2,6 +2,16 @@
 
 namespace MoneyMan;
 
+use MoneyMan\Exception\InvalidCurrencyCodeException;
+
+/**
+ * The Currency Class
+ *
+ * This class is used to represent currencies as an entity.
+ *
+ * @package MoneyMan
+ * @author  Graham A. Sutton <gsutton@sproutloud.com>
+ */
 class Currency
 {
     /**
@@ -18,11 +28,13 @@ class Currency
      * the currency this object represents.
      *
      * @param  string  $code
+     *
+     * @throws \MoneyMan\Exception\InvalidCurrencyCodeException
      */
     public function __construct($code)
     {
-        if (!is_string($code)) {
-            throw new \Exception('Currency code should be a string.');
+        if (!is_string($code) || strlen($code) > 3) {
+            throw new InvalidCurrencyCodeException('Currency code should be a 3-letter string.  e.g. "USD"');
         }
 
         $this->code = $code;
@@ -36,5 +48,17 @@ class Currency
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Compares if another Currency is equal to this Currency.
+     *
+     * @param Currency $currency
+     *
+     * @return bool
+     */
+    public function equals(Currency $currency)
+    {
+        return $this->getCode() === $currency->getCode();
     }
 }

@@ -6,10 +6,10 @@ use MoneyMan\Currency;
 use MoneyMan\Money;
 
 /**
- * Exchange Interface
+ * Exchange Class <<abstract>>
  *
- * Defines the contract needed to establish future currency exchange
- * engines from different providers.
+ * Defines how an exchange should be performed. A subclass is needed to derive
+ * the exchange rate used for
  *
  * @category Exchange
  * @package  Exchange
@@ -17,8 +17,14 @@ use MoneyMan\Money;
  * @license  MIT <http://mit.org>
  * @link     http://mit.org
  */
-interface Exchange
+abstract class Exchange
 {
+    /**
+     * List of exchange rates that have already been retrieved.
+     * @var array
+     */
+    protected $exchange_rates;
+
     /**
      * Exchanges one \MoneyMan\Money object into the desired currency.
      *
@@ -29,7 +35,27 @@ interface Exchange
      *
      * @return \MoneyMan\Money
      */
-    public function exchange(Money $base, Currency $quote);
+    public function exchange(Money $base, Currency $quote)
+    {
+        // Key is a concatenated currency pairing, e.g. 'USDGBP'
+        $key = $base->getCurrency()->getCode() . $quote->getCode();
+
+        if ($base->getCurrency()->equals($quote)) {
+            $this->exchange_rates[$key] = 1;
+        }
+
+        // Get previously retrieved exchange rate, otherwise fetch it from the data source.
+        if (isset($this->exchange_rates[$key])) {
+            $exchange_rate = $this->exchange_rates[$key];
+        } else {
+            $exchange_rate = $this->getExchangeRate($base->getCurrency(), $quote);
+        }
+
+        return new Money(
+            (int) round($base->getAmount() * $exchange_rate, 0),
+            $quote
+        );
+    }
 
     /**
      * Get exchange rate between two different currencies.
@@ -39,5 +65,5 @@ interface Exchange
      *
      * @return float
      */
-    public function getExchangeRate(Currency $base, Currency $quote);
+    abstract public function getExchangeRate(Currency $base, Currency $quote);
 }

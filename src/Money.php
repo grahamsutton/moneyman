@@ -79,4 +79,17 @@ class Money
     {
 
     }
+
+    /**
+     * Adds two \MoneyMan\Money objects together by combining the amounts and
+     * returning a new \MoneyMan\Money object.
+     *
+     * @param \MoneyMan\Money $money
+     *
+     * @return \MoneyMan\Money
+     */
+    public function add(Money $money)
+    {
+
+    }
 }
