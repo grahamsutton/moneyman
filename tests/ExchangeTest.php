@@ -9,12 +9,58 @@
 namespace MoneyManTests\Exchange;
 
 use MoneyMan\Currency;
-use MoneyMan\Exchange\Fixer;
+use MoneyMan\Exchange;
 use MoneyMan\Money;
+use MoneyMan\ServiceFactory;
 use PHPUnit\Framework\TestCase;
 
-class FixerTest extends TestCase
+class ExchangeTest extends TestCase
 {
+    /*-------------------------------------------------------------------
+    | Helper Methods
+    |--------------------------------------------------------------------
+    |
+    | These helper methods are used to quickly generate mock objects used
+    | with the \MoneyMan\Exchange class. The aim is to reduce clutter
+    | in tests so they can be easily deciphered.
+    |
+    */
+
+    /**
+     * Get a \Swap\Swap mock object.
+     *
+     * You will need to provide an exchange rate in case there are any
+     * exchanges happening.
+     *
+     * This object is returned from methods in \Swap\Swap like latest().
+     *
+     * @param float $exchange_rate_value  The value for the one-time exchange.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getSwapServiceMock($exchange_rate_value)
+    {
+        // \Exchanger\ExchangeRate is declared as final, so we unfortunately cannot mock it
+        $exchange_rate = new \Exchanger\ExchangeRate($exchange_rate_value);
+
+        $swap_service = $this->getMockBuilder('\Swap\Swap')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $swap_service->method('latest')
+            ->will($this->returnValue($exchange_rate));
+
+        return $swap_service;
+    }
+
+    /*-------------------------------------------------------------------
+    | Tests
+    |--------------------------------------------------------------------
+    |
+    | Everything from here and down are the actual tests.
+    |
+    */
+
     public function exchangeProperlyExchangesAmountToNewCurrencyDataProvider()
     {
         return [
@@ -93,40 +139,28 @@ class FixerTest extends TestCase
         $quote_currency = new Currency($test['quote_currency']);
         $money          = new Money($amount, $base_currency);
 
-        // Mock HTTP Client Responses
-        $results = [
-            'base'  => $base_currency->getCode(),
-            'date'  => '2017-02-27',
-            'rates' => [
-                $quote_currency->getCode() => $test['exchange_rate']
-            ]
-        ];
-
-        $body = $this->getMockBuilder('\GuzzleHttp\Psr7\Stream')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $body->method('getContents')
-            ->will($this->returnValue(json_encode($results)));
-
-        $response = $this->getMockBuilder('\GuzzleHttp\Psr7\Response')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $response->method('getBody')
-            ->will($this->returnValue($body));
-
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $client->method('request')
-            ->will($this->returnValue($response));
+        $service = $this->getSwapServiceMock($test['exchange_rate']);
 
         // Perform Exchange
-        $exchange        = new Fixer($client);
+        $exchange        = new Exchange($service);
         $converted_money = $exchange->exchange($money, $quote_currency);
 
         $this->assertEquals($expected_money, $converted_money);
+    }
+
+    public function testAddingTwoMoneyObjectsWithDifferentCurrenciesReturnsWithCorrectAmount()
+    {
+        $usd_money  = new Money(467, new Currency('USD'));
+        $euro_money = new Money(1235, new Currency('EUR'));
+
+        $service = $this->getSwapServiceMock(0.82348);
+
+        $exchange       = new Exchange($service);
+        $combined_money = $exchange->add($usd_money, $euro_money);
+
+        $this->assertEquals(
+            new Money(1620, new Currency('EUR')),
+            $combined_money
+        );
     }
 }

@@ -2,8 +2,8 @@
 
 namespace MoneyMan;
 
-use MoneyMan\Currency;
 use MoneyMan\Exception\AmountIsNotAnIntegerException;
+use MoneyMan\Exception\CannotAddDifferentCurrenciesException;
 
 /**
  * The Money Class
@@ -71,25 +71,55 @@ class Money
      * Get the amount and currency code in a human
      * readable format.
      *
-     * e.g. (new \MoneyMan\Money(800, 'USD'))->getFormatted(); // => "$8.00"
+     * e.g. (new \MoneyMan\Money(800, new \MoneyMan\Currency('USD')))->getFormatted(); // => "$8.00"
+     *
+     * @param string $locale  The locale to format the output to.
      *
      * @return string
      */
-    public function getFormatted()
+    public function getFormatted($locale = 'en_US')
     {
+        $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
 
+        // Divide by 100 since formatCurrency accepts a float as first argument
+        $money_string = $formatter->formatCurrency(
+            $this->getAmount() / 100,
+            $this->getCurrency()->getCode()
+        );
+
+        // Replace invisible characters with a space.
+        return str_replace("\xC2\xA0", " ", $money_string);
     }
 
     /**
      * Adds two \MoneyMan\Money objects together by combining the amounts and
      * returning a new \MoneyMan\Money object.
      *
+     * This method can only add two money objects of the same \MoneyMan\Currency
+     * type.
+     *
      * @param \MoneyMan\Money $money
      *
      * @return \MoneyMan\Money
+     *
+     * @throws \MoneyMan\Exception\CannotAddDifferentCurrenciesException
      */
     public function add(Money $money)
     {
+        // Validate they are of the same currency.
+        if ($this->getCurrency()->getCode() !== $money->getCurrency()->getCode()) {
+            throw new CannotAddDifferentCurrenciesException(
+                'To directly add two money objects together, they must be of the same currency.' .
+                'Use \MoneyMan\Exchange::add(\MoneyMan\Money, \MoneyMan\Money) to add \MoneyMan\Money ' .
+                'objects of different currencies.'
+            );
+        }
 
+        $total_amount = $this->getAmount() + $money->getAmount();
+
+        return new self(
+            $total_amount,
+            $this->getCurrency()
+        );
     }
 }

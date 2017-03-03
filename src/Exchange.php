@@ -4,6 +4,9 @@ namespace MoneyMan;
 
 use MoneyMan\Currency;
 use MoneyMan\Money;
+use MoneyMan\Exception\UnsupportedExchangeServiceProvidedException;
+use Swap\Swap;
+use Swap\Builder;
 
 /**
  * Exchange Class <<abstract>>
@@ -17,13 +20,55 @@ use MoneyMan\Money;
  * @license  MIT <http://mit.org>
  * @link     http://mit.org
  */
-abstract class Exchange
+class Exchange
 {
+    /**
+     * The exchange rate service.
+     * @var \Swap\Swap
+     */
+    private $service;
+
     /**
      * List of exchange rates that have already been retrieved.
      * @var array
      */
-    protected $exchange_rates;
+    private $exchange_rates;
+
+    /**
+     * Constructor
+     *
+     * Accepts the name of an exchange rates service from Swap. Default is set to
+     * use Fixer.
+     *
+     * @param \Swap\Swap $service  The service to query exchange rates from.
+     */
+    public function __construct($service)
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * Add two \MoneyMan\Money objects together. This will return a new \MoneyMan\Money
+     * object.
+     *
+     * IMPORTANT! If the currencies are different, the first parameter will be treated
+     * as the base currency while the second parameter will be the quote currency, so
+     * you will end up getting back a \MoneyMan\Money object in the second parameter's
+     * currency with both of those objects' amounts added together.
+     *
+     * @param \MoneyMan\Money $money1
+     * @param \MoneyMan\Money $money2
+     *
+     * @return \MoneyMan\Money
+     */
+    public function add(Money $money1, Money $money2)
+    {
+        // Convert the base to the quote currency
+        $converted_money = $this->exchange($money1, $money2->getCurrency());
+
+        // Return the new \MoneyMan\Money in the quote currency
+        return $converted_money->add($money2);
+    }
 
     /**
      * Exchanges one \MoneyMan\Money object into the desired currency.
@@ -37,19 +82,10 @@ abstract class Exchange
      */
     public function exchange(Money $base, Currency $quote)
     {
-        // Key is a concatenated currency pairing, e.g. 'USDGBP'
-        $key = $base->getCurrency()->getCode() . $quote->getCode();
-
-        if ($base->getCurrency()->equals($quote)) {
-            $this->exchange_rates[$key] = 1;
-        }
-
-        // Get previously retrieved exchange rate, otherwise fetch it from the data source.
-        if (isset($this->exchange_rates[$key])) {
-            $exchange_rate = $this->exchange_rates[$key];
-        } else {
-            $exchange_rate = $this->getExchangeRate($base->getCurrency(), $quote);
-        }
+        // If they are of the same currency, there's no need to query the service.
+        $exchange_rate = $base->getCurrency()->equals($quote)
+            ? 1.00000
+            : $this->getExchangeRate($base->getCurrency(), $quote);
 
         return new Money(
             (int) round($base->getAmount() * $exchange_rate, 0),
@@ -58,12 +94,18 @@ abstract class Exchange
     }
 
     /**
-     * Get exchange rate between two different currencies.
+     * Gets the exchange rate between the base and quote currencies.
      *
-     * @param \MoneyMan\Currency $base  The currency we want to exchange from.
-     * @param \MoneyMan\Currency $quote The currency we want to exchange to.
+     * @param Currency $base
+     * @param Currency $quote
      *
      * @return float
      */
-    abstract public function getExchangeRate(Currency $base, Currency $quote);
+    public function getExchangeRate(Currency $base, Currency $quote)
+    {
+        $base_code  = $base->getCode();
+        $quote_code = $quote->getCode();
+
+        return $this->service->latest("$base_code/$quote_code")->getValue();
+    }
 }
