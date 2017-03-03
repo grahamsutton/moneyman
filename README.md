@@ -63,7 +63,7 @@ $money2 = new Money(4500, new Currency('USD'));
 $new_money = $money1->add($money2);
 
 // Get human readable value of the new Money object
-echo $new_money->getFormatted();  // "$16,800.00"
+echo $new_money->getFormatted();  // "$168.00"
 
 
 /**
