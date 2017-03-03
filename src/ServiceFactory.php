@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: graham1
- * Date: 3/1/17
- * Time: 21:31
- */
 
 namespace MoneyMan;
 use MoneyMan\Exception\UnsupportedExchangeServiceProvidedException;

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: graham1
- * Date: 2/27/17
- * Time: 20:18
- */
 
 namespace MoneyManTests\Exchange;
 
