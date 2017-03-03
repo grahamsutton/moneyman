@@ -56,7 +56,7 @@ echo $exchanged_money->getFormatted('de_DE');  // "46,07 €"
 /**
  * Add two money objects in same currency
  */
-$money1 = new Money(12300, new Currency('USD));
+$money1 = new Money(12300, new Currency('USD'));
 $money2 = new Money(4500, new Currency('USD'));
 
 // Returns a brand new Money object
@@ -89,4 +89,6 @@ echo $exchanged_money->getFormatted('de_DE');  // "105,45 €"
 
 ## Why *Immutable* Money Objects?
 
-It may not seem to make a whole bunch of sense at first, but when you really think a little deeper, it does. Imagine you have a $20 USD bill. Can a $20 bill *suddenly* become $35? Obviously, no. You must *add* $15 to it to get a *new* single value.
+It may not seem to make a whole bunch of sense at first, but when you really think a little deeper, it does. Imagine you have a $20 USD bill. Can a $20 bill *suddenly* become $35? Obviously, no. You must *add* $15 to it to get a *new* single value, you do not change the value of the $20 bill.
+
+Money objects in MoneyMan intend to take a more "natural" world approach. In the example, the $20 bill represents a single value of money (the firs object). When we add it $15, we are adding a second, separate value of money (the second object). From this we get a new, single value of both totals combined (a new, third object).
