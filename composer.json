@@ -1,5 +1,6 @@
 {
-    "name": "root/moneyman",
+    "name": "grahamsutton/moneyman",
+    "description": "MoneyMan is a way to represent money in your application as an object.",
     "authors": [
         {
             "name": "Graham Sutton",
