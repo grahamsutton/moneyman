@@ -15,17 +15,11 @@ Using floating point numbers can be bad news and lead to a lot of headaches that
 
 ## Quick Example
 
+**Create money object and print its value based on locale**
 ```php
-<?php
-
 use MoneyMan\Money;
 use MoneyMan\Currency;
-use MoneyMan\Exchange;
-use MoneyMan\ServiceFactory;
 
-/**
- * Print value of a money object based on locale.
- */
 $money = new Money(123400, new Currency('USD'));
 
 // Get human readable value based on locale , default is 'en_US'
@@ -33,11 +27,15 @@ echo $money->getFormatted();  // "$1,234.00"
 
 // Get human readable value based on specified locale
 echo $money->getFormatted('de_DE');  // "1.234,00 $"
+```
 
+**Exchange a Money object from one currency to another**
+```php
+use MoneyMan\Money;
+use MoneyMan\Currency;
+use MoneyMan\Exchange;
+use MoneyMan\ServiceFactory;
 
-/**
- * Perform a simple exchange.
- */
 $service = ServiceFactory::getService(ServiceFactory::GOOGLE);  // use Google Finance
 $exchange = new Exchange($service);
 
@@ -51,11 +49,13 @@ echo $exchanged_money->getFormatted();  // "€46.07"
 
 // Print it in different locale
 echo $exchanged_money->getFormatted('de_DE');  // "46,07 €"
+```
 
+**Add two Money objects with same currency**
+```php
+use MoneyMan\Money;
+use MoneyMan\Currency;
 
-/**
- * Add two money objects in same currency
- */
 $money1 = new Money(12300, new Currency('USD'));
 $money2 = new Money(4500, new Currency('USD'));
 
@@ -64,11 +64,15 @@ $new_money = $money1->add($money2);
 
 // Get human readable value of the new Money object
 echo $new_money->getFormatted();  // "$168.00"
+```
 
+**Add two Money objects with different currencies**
+```php
+use MoneyMan\Money;
+use MoneyMan\Currency;
+use MoneyMan\Exchange;
+use MoneyMan\ServiceFactory;
 
-/**
- * Add two money objects in *different* currency
- */
 // Get a service that will be used to perform the exchange
 $service  = ServiceFactory::getService(ServiceFactory::YAHOO);  // will use Yahoo Finance
 $exchange = new Exchange($service);
@@ -91,4 +95,4 @@ echo $exchanged_money->getFormatted('de_DE');  // "105,45 €"
 
 It may not seem to make a whole bunch of sense at first, but when you really think a little deeper, it does. Imagine you have a $20 USD bill. Can a $20 bill *suddenly* become $35? Obviously, no. You must *add* $15 to it to get a *new* single value, you do not change the value of the $20 bill.
 
-Money objects in MoneyMan intend to take a more "natural" world approach. In the example, the $20 bill represents a single value of money (the firs object). When we add it $15, we are adding a second, separate value of money (the second object). From this we get a new, single value of both totals combined (a new, third object).
+Money objects in MoneyMan intend to take a more "natural" world approach. In the example, the $20 bill represents a single value of money (the first Money object). When we add $15 to it, we are adding a second, separate value of money (the second Money object). From this we get a new, single value of both totals combined (a new, third Money object).
