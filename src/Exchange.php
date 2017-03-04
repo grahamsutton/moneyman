@@ -4,12 +4,10 @@ namespace MoneyMan;
 
 use MoneyMan\Currency;
 use MoneyMan\Money;
-use MoneyMan\Exception\UnsupportedExchangeServiceProvidedException;
 use Swap\Swap;
-use Swap\Builder;
 
 /**
- * Exchange Class <<abstract>>
+ * Exchange Class
  *
  * Defines how an exchange should be performed. A subclass is needed to derive
  * the exchange rate used for
@@ -27,12 +25,6 @@ class Exchange
      * @var \Swap\Swap
      */
     private $service;
-
-    /**
-     * List of exchange rates that have already been retrieved.
-     * @var array
-     */
-    private $exchange_rates;
 
     /**
      * Constructor
@@ -56,8 +48,8 @@ class Exchange
      * you will end up getting back a \MoneyMan\Money object in the second parameter's
      * currency with both of those objects' amounts added together.
      *
-     * @param \MoneyMan\Money $money1
-     * @param \MoneyMan\Money $money2
+     * @param \MoneyMan\Money $money1  The first money object.
+     * @param \MoneyMan\Money $money2  The second money object.
      *
      * @return \MoneyMan\Money
      */
@@ -75,8 +67,8 @@ class Exchange
      *
      * This should return a brand new \MoneyMan\Money object.
      *
-     * @param \MoneyMan\Money    $base  The money we are exchanging.
-     * @param \MoneyMan\Currency $quote The currency we are exchanging to.
+     * @param \MoneyMan\Money    $base   The money we are exchanging.
+     * @param \MoneyMan\Currency $quote  The currency we are exchanging to.
      *
      * @return \MoneyMan\Money
      */
@@ -96,8 +88,8 @@ class Exchange
     /**
      * Gets the exchange rate between the base and quote currencies.
      *
-     * @param Currency $base
-     * @param Currency $quote
+     * @param Currency $base   The currency we want to exchange from.
+     * @param Currency $quote  The currency we want to exchange to.
      *
      * @return float
      */

@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="20c6773f-dec9-4a2e-8ac5-f34f136f5ec9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Exception/CannotAddDifferentCurrenciesException.php" afterPath="$PROJECT_DIR$/src/Exception/CannotAddDifferentCurrenciesException.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Exception/InvalidCurrencyCodeException.php" afterPath="$PROJECT_DIR$/src/Exception/InvalidCurrencyCodeException.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Exception/UnsupportedExchangeServiceProvidedException.php" afterPath="$PROJECT_DIR$/src/Exception/UnsupportedExchangeServiceProvidedException.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ServiceFactory.php" afterPath="$PROJECT_DIR$/src/ServiceFactory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/CurrencyTest.php" afterPath="$PROJECT_DIR$/tests/CurrencyTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Exchange.php" afterPath="$PROJECT_DIR$/src/Exchange.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/ExchangeTest.php" afterPath="$PROJECT_DIR$/tests/ExchangeTest.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,11 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Exchange.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Exchange.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Exchange.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
-              <caret line="81" column="7" lean-forward="true" selection-start-line="81" selection-start-column="7" selection-end-line="81" selection-end-column="7" />
+            <state relative-caret-position="432">
+              <caret line="98" column="40" lean-forward="false" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
               <folding>
                 <element signature="e#28#50#0#PHP" expanded="true" />
               </folding>
@@ -59,51 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AmountIsNotAnIntegerException.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Exception/AmountIsNotAnIntegerException.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="2" lean-forward="true" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CannotAddDifferentCurrenciesException.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Exception/CannotAddDifferentCurrenciesException.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="33" lean-forward="false" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UnsupportedExchangeServiceProvidedException.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Exception/UnsupportedExchangeServiceProvidedException.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InvalidCurrencyCodeException.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Exception/InvalidCurrencyCodeException.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ExchangeTest.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/ExchangeTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="117">
+              <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
               <folding>
                 <element signature="e#42#64#0#PHP" expanded="true" />
               </folding>
@@ -153,16 +109,18 @@
         <option value="$PROJECT_DIR$/tests/Exchange/FixerTest.php" />
         <option value="$PROJECT_DIR$/src/Exchange/Fixer.php" />
         <option value="$PROJECT_DIR$/src/Exchange/Factory.php" />
-        <option value="$PROJECT_DIR$/src/Exchange.php" />
         <option value="$PROJECT_DIR$/src/Money.php" />
         <option value="$PROJECT_DIR$/tests/MoneyTest.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/ServiceFactory.php" />
-        <option value="$PROJECT_DIR$/tests/ExchangeTest.php" />
         <option value="$PROJECT_DIR$/tests/CurrencyTest.php" />
         <option value="$PROJECT_DIR$/src/Exception/CannotAddDifferentCurrenciesException.php" />
         <option value="$PROJECT_DIR$/src/Exception/InvalidCurrencyCodeException.php" />
         <option value="$PROJECT_DIR$/src/Exception/UnsupportedExchangeServiceProvidedException.php" />
+        <option value="$PROJECT_DIR$/tests/ExchangeTest.php" />
+        <option value="$PROJECT_DIR$/src/Service.php" />
+        <option value="$PROJECT_DIR$/src/Service/GoogleService.php" />
+        <option value="$PROJECT_DIR$/src/Exchange.php" />
       </list>
     </option>
   </component>
@@ -345,16 +303,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1488240905844</updated>
-      <workItem from="1488240907157" duration="40013000" />
+      <workItem from="1488240907157" duration="47201000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40013000" />
+    <option name="totallyTimeSpent" value="47201000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="993" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21512248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -363,7 +321,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -473,31 +431,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/ExchangeTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#42#64#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Currency.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Exchange.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="81" column="7" lean-forward="true" selection-start-line="81" selection-start-column="7" selection-end-line="81" selection-end-column="7" />
-          <folding>
-            <element signature="e#28#50#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -547,9 +485,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Exception/UnsupportedExchangeServiceProvidedException.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/GoogleService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/ExchangeTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+          <folding>
+            <element signature="e#42#64#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Exchange.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="98" column="40" lean-forward="false" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
+          <folding>
+            <element signature="e#28#50#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

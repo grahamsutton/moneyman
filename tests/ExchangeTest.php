@@ -28,21 +28,35 @@ class ExchangeTest extends TestCase
      *
      * This object is returned from methods in \Swap\Swap like latest().
      *
-     * @param float $exchange_rate_value  The value for the one-time exchange.
+     * @param float|array $exchange_rate_value  The value for the one-time exchange or an array of them.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getSwapServiceMock($exchange_rate_value)
     {
-        // \Exchanger\ExchangeRate is declared as final, so we unfortunately cannot mock it
-        $exchange_rate = new \Exchanger\ExchangeRate($exchange_rate_value);
-
         $swap_service = $this->getMockBuilder('\Swap\Swap')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $swap_service->method('latest')
-            ->will($this->returnValue($exchange_rate));
+        if (is_array($exchange_rate_value)) {
+
+            for ($i = 0; $i < count($exchange_rate_value); $i++) {
+
+                // For consecutive calls (array of exchange rate values)
+                $swap_service->expects($this->at($i))
+                    ->method('latest')
+                    ->will($this->returnValue(
+                        new \Exchanger\ExchangeRate($exchange_rate_value[$i])
+                    ));
+            }
+
+        } else {
+
+            $exchange_rate = new \Exchanger\ExchangeRate($exchange_rate_value);
+
+            $swap_service->method('latest')
+                ->will($this->returnValue($exchange_rate));
+        }
 
         return $swap_service;
     }
@@ -157,4 +171,18 @@ class ExchangeTest extends TestCase
             $combined_money
         );
     }
+
+    public function testExchangingAnAlreadyExchangedAmountBackToOriginalCurrencyGivesOriginalValue()
+    {
+        $service  = $this->getSwapServiceMock([0.94652, 1.0565]);
+        $exchange = new Exchange($service);
+
+        $original_money = new Money(2342, new Currency('USD'));
+
+        $euro_money = $exchange->exchange($original_money, new Currency('EUR'));
+        $usd_money  = $exchange->exchange($euro_money, new Currency('USD'));
+
+        $this->assertEquals($original_money->getAmount(), $usd_money->getAmount());
+    }
+
 }
