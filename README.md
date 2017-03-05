@@ -13,12 +13,24 @@ Using floating point numbers can be bad news and lead to a lot of headaches that
 * Formatting the display of your money object values to be shown in a desired locale
 * Ability to two money objects of different currencies and get an output in desired currency
 
-**MoneyMan is still in active development.**
-If you want to try it out, you can install it via composer, but you will have to lower your minimum-stability to `dev`.
-
 **Install**
+
+From the command line:
 ```bash
 $ composer require grahamsutton/moneyman
+```
+
+**OR**
+
+add it directly to your `composer.json` file and run `composer install`:
+```json
+"require": {
+    "grahamsutton/moneyman: "^0.1"
+}
+```
+then:
+```bash
+$ composer install
 ```
 
 ## Quick Example
