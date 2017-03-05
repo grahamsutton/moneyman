@@ -15,22 +15,9 @@ Using floating point numbers can be bad news and lead to a lot of headaches that
 
 **Install**
 
-From the command line:
+Use the command line:
 ```bash
 $ composer require grahamsutton/moneyman
-```
-
-**OR**
-
-add it directly to your `composer.json` file and run `composer install`:
-```json
-"require": {
-    "grahamsutton/moneyman: "^0.1"
-}
-```
-then:
-```bash
-$ composer install
 ```
 
 ## Quick Example
