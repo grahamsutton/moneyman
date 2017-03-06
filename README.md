@@ -13,10 +13,9 @@ Using floating point numbers can be bad news and lead to a lot of headaches that
 * Formatting the display of your money object values to be shown in a desired locale
 * Ability to two money objects of different currencies and get an output in desired currency
 
-**MoneyMan is still in active development.**
-If you want to try it out, you can install it via composer, but you will have to lower your minimum-stability to `dev`.
-
 **Install**
+
+Use the command line:
 ```bash
 $ composer require grahamsutton/moneyman
 ```
@@ -104,3 +103,30 @@ echo $exchanged_money->getFormatted('de_DE');  // "105,45 €"
 It may not seem to make a whole bunch of sense at first, but when you really think a little deeper, it does. Imagine you have a $20 USD bill. Can a $20 bill *suddenly* become $35? Obviously, no. You must *add* $15 to it to get a *new* single value, you do not change the value of the $20 bill.
 
 Money objects in MoneyMan intend to take a more "natural" world approach. In the example, the $20 bill represents a single value of money (the first Money object). When we add $15 to it, we are adding a second, separate value of money (the second Money object). From this we get a new, single value of both totals combined (a new, third Money object).
+
+## MIT License
+
+The MIT License
+
+Copyright (c) 2017 Graham Sutton
+
+Permission is hereby granted, free of charge, 
+to any person obtaining a copy of this software and 
+associated documentation files (the "Software"), to 
+deal in the Software without restriction, including 
+without limitation the rights to use, copy, modify, 
+merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom 
+the Software is furnished to do so, 
+subject to the following conditions:
+
+The above copyright notice and this permission notice 
+shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
