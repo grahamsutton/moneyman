@@ -5,6 +5,7 @@
 
 MoneyMan is a way to represent money in your application as an object.
 
+
 Using floating point numbers can be bad news and lead to a lot of headaches that may make you afraid to want to perform currency exchanges in your application. MoneyMan strives to make dealing with money easy by using the following:
 
 * Immutable money objects that protect you from having money values *suddenly* become something else.
