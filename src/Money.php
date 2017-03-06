@@ -108,7 +108,7 @@ class Money
     public function add(Money $money)
     {
         // Validate they are of the same currency.
-        if ($this->getCurrency()->getCode() !== $money->getCurrency()->getCode()) {
+        if (!$this->hasSameCurrencyAs($money)) {
             throw new CannotAddDifferentCurrenciesException(
                 'To directly add two money objects together, they must be of the same currency.' .
                 'Use \MoneyMan\Exchange::add(\MoneyMan\Money, \MoneyMan\Money) to add \MoneyMan\Money ' .
@@ -134,12 +134,12 @@ class Money
      *
      * @return \MoneyMan\Money
      *
-     * @throws \MoneyMan\Exception\CannotAddDifferentCurrenciesException
+     * @throws \MoneyMan\Exception\CannotSubtractDifferentCurrenciesException
      */
     public function subtract(Money $money)
     {
         // Validate they are of the same currency.
-        if ($this->getCurrency()->getCode() !== $money->getCurrency()->getCode()) {
+        if (!$this->hasSameCurrencyAs($money)) {
             throw new CannotSubtractDifferentCurrenciesException(
                 'To directly subtract one money object from another, they must be of the same currency.' .
                 'Use \MoneyMan\Exchange::subtract(\MoneyMan\Money, \MoneyMan\Money) to subtract \MoneyMan\Money ' .
@@ -153,5 +153,18 @@ class Money
             $total_amount,
             $this->getCurrency()
         );
+    }
+
+    /**
+     * Determine if this \MoneyMan\Money object has the same currency as another
+     * \MoneyMan\Money object.
+     *
+     * @param \MoneyMan\Money $money The money object to compare against.
+     *
+     * @return bool
+     */
+    public function hasSameCurrencyAs(Money $money)
+    {
+        return $this->getCurrency()->equals($money->getCurrency());
     }
 }

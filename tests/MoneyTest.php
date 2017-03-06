@@ -390,4 +390,32 @@ class MoneyTest extends TestCase
 
         $this->assertEquals($expected, $money->getFormatted($test['locale']));
     }
+
+    public function testHasSameCurrencyAsReturnsTrueWhenMoneyObjectsHaveSameCurrency()
+    {
+        $amount1 = 1000;
+        $amount2 = 2000;
+
+        $currency1 = new Currency('USD');
+        $currency2 = new Currency('USD');
+
+        $money1 = new Money($amount1, $currency1);
+        $money2 = new Money($amount2, $currency2);
+
+        $this->assertTrue($money1->hasSameCurrencyAs($money2));
+    }
+
+    public function testHasSameCurrencyAsReturnsFalseWhenMoneyObjectsHaveDifferentCurrencies()
+    {
+        $amount1 = 1000;
+        $amount2 = 2000;
+
+        $currency1 = new Currency('USD');
+        $currency2 = new Currency('EUR');
+
+        $money1 = new Money($amount1, $currency1);
+        $money2 = new Money($amount2, $currency2);
+
+        $this->assertFalse($money1->hasSameCurrencyAs($money2));
+    }
 }
