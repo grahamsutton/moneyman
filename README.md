@@ -63,7 +63,7 @@ echo $exchanged_money->getFormatted();  // "€46.07"
 echo $exchanged_money->getFormatted('de_DE');  // "46,07 €"
 ```
 
-### Doing Math
+### Doing Arithmetic
 
 **Add two Money objects with same currency**
 ```php
