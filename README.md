@@ -13,6 +13,11 @@ Using floating point numbers can be bad news and lead to a lot of headaches that
 * Formatting the display of your money object values to be shown in a desired locale
 * Ability to two money objects of different currencies and get an output in desired currency
 
+Currently supported exchange rate servcies include:
+
+* [Fixer](http://fixer.io/)
+* [Yahoo Finance](https://finance.yahoo.com)
+
 **Install**
 
 Use the command line:
@@ -43,7 +48,7 @@ use MoneyMan\Currency;
 use MoneyMan\Exchange;
 use MoneyMan\ServiceFactory;
 
-$service = ServiceFactory::getService(ServiceFactory::GOOGLE);  // use Google Finance
+$service = ServiceFactory::getService('fixer');  // use Fixer.io
 $exchange = new Exchange($service);
 
 $money = new Money(5000, new Currency('USD'));
@@ -57,6 +62,8 @@ echo $exchanged_money->getFormatted();  // "€46.07"
 // Print it in different locale
 echo $exchanged_money->getFormatted('de_DE');  // "46,07 €"
 ```
+
+### Doing Math
 
 **Add two Money objects with same currency**
 ```php
@@ -73,6 +80,21 @@ $new_money = $money1->add($money2);
 echo $new_money->getFormatted();  // "$168.00"
 ```
 
+**Subtract two Money objects with same currency**
+```php
+use MoneyMan\Money;
+use MoneyMan\Currency;
+
+$money1 = new Money(12300, new Currency('USD'));
+$money2 = new Money(4500, new Currency('USD'));
+
+// Returns a brand new Money object
+$new_money = $money1->subtract($money2);  // think $money1 - $money2
+
+// Get human readable value of the new Money object
+echo $new_money->getFormatted();  // "$78.00"
+```
+
 **Add two Money objects with different currencies**
 ```php
 use MoneyMan\Money;
@@ -81,21 +103,39 @@ use MoneyMan\Exchange;
 use MoneyMan\ServiceFactory;
 
 // Get a service that will be used to perform the exchange
-$service  = ServiceFactory::getService(ServiceFactory::YAHOO);  // will use Yahoo Finance
+$service  = ServiceFactory::getService('yahoo');  // will use Yahoo Finance
 $exchange = new Exchange($service);
 
 $money1 = new Money(4300, new Currency('USD'));
 $money2 = new Money(6700, new Currency('EUR'));
 
-// $money1 will be converted to $money2's currency and then added together.
-// Pretend USD->EUR exchange rate is 0.89423
+// $money2 will be converted to $money1's currency and then added together.
+// Pretend EUR->USD exchange rate is 1.09124
 $exchanged_money = $exchange->add($money1, $money2);
 
 // Print the new money object's value
-echo $exchanged_money->getFormatted();  // "€105.45"
+echo $exchanged_money->getFormatted();  // "$116.11"
 
 // Print the new money object in different locale
-echo $exchanged_money->getFormatted('de_DE');  // "105,45 €"
+echo $exchanged_money->getFormatted('de_DE');  // "116,11 $"
+```
+
+**Subtract two Money objects with different currencies**
+```php
+...
+
+$money1 = new Money(10000, new Currency('EUR'));
+$money2 = new Money(5300, new Currency('USD'));
+
+// $money2 will be converted to $money1's currency and then subtracted from $money1
+// Pretend USD->EUR exchange rate is 0.94235
+$exchanged_money = $exchange->subtract($money1, $money2);  // think $money1 - $money2
+
+// Print the new money object's value
+echo $exchanged_money->getFormatted();  // "€50.05"
+
+// Print the new money object in different locale
+echo $exchanged_money->getFormatted('de_DE');  // "50,05 €"
 ```
 
 ## Why *Immutable* Money Objects?
