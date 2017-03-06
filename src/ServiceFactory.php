@@ -19,7 +19,6 @@ class ServiceFactory
      * @var string(s)
      */
     const FIXER  = 'fixer';
-    const GOOGLE = 'google';
     const YAHOO  = 'yahoo';
 
     /**
@@ -28,7 +27,6 @@ class ServiceFactory
      */
     private static $SERVICES = [
         self::FIXER,
-        self::GOOGLE,
         self::YAHOO
     ];
 
@@ -55,12 +53,6 @@ class ServiceFactory
             case self::FIXER:
                 return (new \Swap\Builder())
                     ->add('fixer')
-                    ->build();
-
-            // Google
-            case self::GOOGLE:
-                return (new \Swap\Builder())
-                    ->add('google')
                     ->build();
 
             // Yahoo

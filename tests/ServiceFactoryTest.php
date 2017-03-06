@@ -11,7 +11,6 @@ class ServiceFactoryTest extends TestCase
     {
         return [
             [ServiceFactory::FIXER],
-            [ServiceFactory::GOOGLE],
             [ServiceFactory::YAHOO]
         ];
     }
