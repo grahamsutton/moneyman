@@ -167,8 +167,62 @@ class ExchangeTest extends TestCase
         $combined_money = $exchange->add($usd_money, $euro_money);
 
         $this->assertEquals(
-            new Money(1620, new Currency('EUR')),
+            new Money(1484, new Currency('USD')),
             $combined_money
+        );
+    }
+
+    public function testAddingTwoMoneyObjectsWithSameCurrencyReturnsWithCorrectAmount()
+    {
+        $money1 = new Money(12341, new Currency('USD'));
+        $money2 = new Money(9874, new Currency('USD'));
+
+        // If currencies are the same, exchange rate provided here shouldn't matter. The exchange()
+        // method should be able to detect the equality and make sure to set the exchange rate to
+        // 1.00000
+        $service = $this->getSwapServiceMock(0.23423);
+
+        $exchange       = new Exchange($service);
+        $combined_money = $exchange->add($money1, $money2);
+
+        $this->assertEquals(
+            new Money(22215, new Currency('USD')),
+            $combined_money
+        );
+    }
+
+    public function testSubtractingTwoMoneyObjectsWithDifferentCurrenciesReturnsWithCorrectAmount()
+    {
+        $usd_money  = new Money(23472, new Currency('USD'));
+        $euro_money = new Money(2342, new Currency('EUR'));
+
+        $service = $this->getSwapServiceMock(1.23425);
+
+        $exchange      = new Exchange($service);
+        $reduced_money = $exchange->subtract($usd_money, $euro_money);
+
+        $this->assertEquals(
+            new Money(20581, new Currency('USD')),
+            $reduced_money
+        );
+    }
+
+    public function testSubtractingTwoMoneyObjectsWithSameCurrencyReturnsWithCorrectAmount()
+    {
+        $money1  = new Money(23472, new Currency('USD'));
+        $money2 = new Money(2342, new Currency('USD'));
+
+        // If currencies are the same, exchange rate provided here shouldn't matter. The exchange()
+        // method should be able to detect the equality and make sure to set the exchange rate to
+        // 1.00000
+        $service = $this->getSwapServiceMock(1.23425);
+
+        $exchange      = new Exchange($service);
+        $reduced_money = $exchange->subtract($money1, $money2);
+
+        $this->assertEquals(
+            new Money(21130, new Currency('USD')),
+            $reduced_money
         );
     }
 
@@ -184,5 +238,4 @@ class ExchangeTest extends TestCase
 
         $this->assertEquals($original_money->getAmount(), $usd_money->getAmount());
     }
-
 }

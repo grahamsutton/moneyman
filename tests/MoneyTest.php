@@ -80,7 +80,6 @@ class MoneyTest extends TestCase
      */
     public function testMoneyThrowsExceptionWhenTryingToAddTwoDifferentCurrencies()
     {
-        // Test
         $amount1 = 352;
         $amount2 = 472;
 
@@ -90,15 +89,46 @@ class MoneyTest extends TestCase
         $money1 = new Money($amount1, $currency1);
         $money2 = new Money($amount2, $currency2);
 
+        $new_money = $money1->add($money2);
+    }
+
+    public function testMoneyCanSubtractAnotherMoneyObjectInTheSameCurrency()
+    {
+        $amount1 = 2342;
+        $amount2 = 654;
+
+        $currency1 = new Currency('USD');
+        $currency2 = new Currency('USD');
+
+        $money1 = new Money($amount1, $currency1);
+        $money2 = new Money($amount2, $currency2);
+
         // Expected Result
-        $expected_amount   = $amount1 + $amount2;
+        $expected_amount   = $amount1 - $amount2;
         $expected_currency = new Currency('USD');
         $expected_money    = new Money($expected_amount, $expected_currency);
 
         // Execute
-        $new_money = $money1->add($money2);
+        $new_money = $money1->subtract($money2);
 
         $this->assertEquals($expected_money, $new_money);
+    }
+
+    /**
+     * @expectedException \MoneyMan\Exception\CannotSubtractDifferentCurrenciesException
+     */
+    public function testMoneyThrowsExceptionWhenTryingToSubtractTwoDifferentCurrencies()
+    {
+        $amount1 = 31252;
+        $amount2 = 472;
+
+        $currency1 = new Currency('USD');
+        $currency2 = new Currency('EUR');
+
+        $money1 = new Money($amount1, $currency1);
+        $money2 = new Money($amount2, $currency2);
+
+        $new_money = $money1->subtract($money2);
     }
 
     public function moneyCanReturnCorrectFormatForDefaultLocaleDataProvider()

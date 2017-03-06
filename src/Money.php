@@ -4,6 +4,7 @@ namespace MoneyMan;
 
 use MoneyMan\Exception\AmountIsNotAnIntegerException;
 use MoneyMan\Exception\CannotAddDifferentCurrenciesException;
+use MoneyMan\Exception\CannotSubtractDifferentCurrenciesException;
 
 /**
  * The Money Class
@@ -116,6 +117,37 @@ class Money
         }
 
         $total_amount = $this->getAmount() + $money->getAmount();
+
+        return new self(
+            $total_amount,
+            $this->getCurrency()
+        );
+    }
+
+    /**
+     * Subtracts the incoming \MoneyMan\Money object's amount from this object.
+     *
+     * This method can only add two money objects of the same \MoneyMan\Currency
+     * type.
+     *
+     * @param \MoneyMan\Money $money
+     *
+     * @return \MoneyMan\Money
+     *
+     * @throws \MoneyMan\Exception\CannotAddDifferentCurrenciesException
+     */
+    public function subtract(Money $money)
+    {
+        // Validate they are of the same currency.
+        if ($this->getCurrency()->getCode() !== $money->getCurrency()->getCode()) {
+            throw new CannotSubtractDifferentCurrenciesException(
+                'To directly subtract one money object from another, they must be of the same currency.' .
+                'Use \MoneyMan\Exchange::subtract(\MoneyMan\Money, \MoneyMan\Money) to subtract \MoneyMan\Money ' .
+                'objects of different currencies.'
+            );
+        }
+
+        $total_amount = $this->getAmount() - $money->getAmount();
 
         return new self(
             $total_amount,

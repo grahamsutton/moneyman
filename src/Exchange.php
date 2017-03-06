@@ -43,10 +43,8 @@ class Exchange
      * Add two \MoneyMan\Money objects together. This will return a new \MoneyMan\Money
      * object.
      *
-     * IMPORTANT! If the currencies are different, the first parameter will be treated
-     * as the base currency while the second parameter will be the quote currency, so
-     * you will end up getting back a \MoneyMan\Money object in the second parameter's
-     * currency with both of those objects' amounts added together.
+     * IMPORTANT! If the currencies are different, the second parameter will be converted
+     * to the first parameter's currency and then added together.
      *
      * @param \MoneyMan\Money $money1  The first money object.
      * @param \MoneyMan\Money $money2  The second money object.
@@ -55,11 +53,34 @@ class Exchange
      */
     public function add(Money $money1, Money $money2)
     {
-        // Convert the base to the quote currency
-        $converted_money = $this->exchange($money1, $money2->getCurrency());
+        // Convert the second money object to the first money object's currency
+        $converted_money = $this->exchange($money2, $money1->getCurrency());
 
-        // Return the new \MoneyMan\Money in the quote currency
-        return $converted_money->add($money2);
+        // Return the new \MoneyMan\Money in the first parameter's currency
+        return $money1->add($converted_money);
+    }
+
+    /**
+     * Subtract one \MoneyMan\Money object from another. This will return a brand new
+     * \MoneyMan\Money object.
+     *
+     * IMPORTANT! If the currencies are different, the second parameter will be converted
+     * to the first parameter's currency. Afterwards, the second parameter's exchanged
+     * amount will be deducted from the first parameter's amount and returned in a
+     * new \MoneyMan\Money object.
+     *
+     * @param \MoneyMan\Money $money1  The first money object
+     * @param \MoneyMan\Money $money2  The second money object
+     *
+     * @return \MoneyMan\Money
+     */
+    public function subtract(Money $money1, Money $money2)
+    {
+        // Convert the second money object to the first money object's currency
+        $converted_money = $this->exchange($money2, $money1->getCurrency());
+
+        // Return the new \MoneyMan\Money in the first parameter's currency
+        return $money1->subtract($converted_money);
     }
 
     /**
