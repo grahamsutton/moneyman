@@ -52,21 +52,102 @@ class MoneyTest extends TestCase
         $money    = new Money($amount, $currency);
     }
 
-    public function testMoneyCanAddAnotherMoneyObjectInTheSameCurrency()
+    public function moneyCanAddAnotherMoneyObjectInTheSameCurrencyDataProvider()
+    {
+        return [
+
+            // #1 - Test Addition w/ Unsigned Values - 1
+            [
+                'test' => [
+                    'money1' => [
+                        'amount'   => 2342,
+                        'currency' => 'USD'
+                    ],
+                    'money2' => [
+                        'amount'   => 654,
+                        'currency' => 'USD'
+                    ]
+                ],
+                'expected' => [
+                    'amount'   => 2996,
+                    'currency' => 'USD'
+                ]
+            ],
+
+            // #2 - Test Addition w/ Unsigned Values - 2
+            [
+                'test' => [
+                    'money1' => [
+                        'amount'   => 98234,
+                        'currency' => 'USD'
+                    ],
+                    'money2' => [
+                        'amount'   => 8623,
+                        'currency' => 'USD'
+                    ]
+                ],
+                'expected' => [
+                    'amount'   => 106857,
+                    'currency' => 'USD'
+                ]
+            ],
+
+            // #3 - Test Addition w/ Signed Value In It - 1
+            [
+                'test' => [
+                    'money1' => [
+                        'amount'   => -1200,
+                        'currency' => 'USD'
+                    ],
+                    'money2' => [
+                        'amount'   => 1600,
+                        'currency' => 'USD'
+                    ]
+                ],
+                'expected' => [
+                    'amount'   => 400,
+                    'currency' => 'USD'
+                ]
+            ],
+
+            // #4 - Test Addition w/ Signed Value In It - 2
+            [
+                'test' => [
+                    'money1' => [
+                        'amount'   => -9832,
+                        'currency' => 'USD'
+                    ],
+                    'money2' => [
+                        'amount'   => 239498,
+                        'currency' => 'USD'
+                    ]
+                ],
+                'expected' => [
+                    'amount'   => 229666,
+                    'currency' => 'USD'
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider moneyCanAddAnotherMoneyObjectInTheSameCurrencyDataProvider
+     */
+    public function testMoneyCanAddAnotherMoneyObjectInTheSameCurrency($test, $expected)
     {
         // Test
-        $amount1 = 352;
-        $amount2 = 472;
+        $amount1 = $test['money1']['amount'];
+        $amount2 = $test['money2']['amount'];
 
-        $currency1 = new Currency('USD');
-        $currency2 = new Currency('USD');
+        $currency1 = new Currency($test['money1']['currency']);
+        $currency2 = new Currency($test['money2']['currency']);
 
         $money1 = new Money($amount1, $currency1);
         $money2 = new Money($amount2, $currency2);
 
         // Expected Result
-        $expected_amount   = $amount1 + $amount2;
-        $expected_currency = new Currency('USD');
+        $expected_amount   = $expected['amount'];
+        $expected_currency = new Currency($expected['currency']);
         $expected_money    = new Money($expected_amount, $expected_currency);
 
         // Execute
