@@ -1,6 +1,7 @@
 # MoneyMan
 
 [![CircleCI](https://circleci.com/gh/grahamsutton/moneyman.svg?style=svg)](https://circleci.com/gh/grahamsutton/moneyman)
+[![Coverage Status](https://coveralls.io/repos/github/grahamsutton/moneyman/badge.svg?branch=master)](https://coveralls.io/github/grahamsutton/moneyman?branch=master)
 
 MoneyMan is a way to represent money in your application as an object.
 
