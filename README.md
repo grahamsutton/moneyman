@@ -45,6 +45,19 @@ echo $money->getFormatted();  // "$1,234.00"
 echo $money->getFormatted('de_DE');  // "1.234,00 $"
 ```
 
+**Get a Swap object for fetching rates**
+```php
+use MoneyMan\Exchange;
+use MoneyMan\ServiceFactory;
+
+// Available services
+$yahoo_service = ServiceFactory::getService('yahoo');
+$fixer_service = ServiceFactory::getService('fixer');
+
+// Pass to a \MoneyMan\Exchange object
+$exchange = new Exchange($fixer_service);
+```
+
 **Exchange a Money object from one currency to another**
 ```php
 use MoneyMan\Money;
